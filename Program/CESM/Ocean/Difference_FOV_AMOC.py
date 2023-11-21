@@ -68,6 +68,10 @@ for time_1_i in range(1649, 1700):
 			#Make an empty array for ideal model
 			x_break	= np.zeros(time_3_j - time_1_i + 1)
 
+			if transport[time_2_k] > transport[time_1_i]:
+				transport_diff_all[time_2_k-1724] = 10**9
+				continue
+
 			#The first part, time 1 to time 2 (break point)
 			x_break[:time_2_k-time_1_i+1]	= transport[time_1_i] + np.arange(time_2_k-time_1_i+1) * (transport[time_2_k] - transport[time_1_i]) / (time[time_2_k] - time[time_1_i])
 
@@ -92,8 +96,12 @@ for time_1_i in range(1649, 1700):
 
 
 print('AMOC tipping point (mean):', np.mean(tipping_estimate))
+print('AMOC tipping point (5 percentile):', np.percentile(tipping_estimate, 5))
+print('AMOC tipping point (10 percentile):', np.percentile(tipping_estimate, 10))
 print('AMOC tipping point (25 percentile):', np.percentile(tipping_estimate, 25))
 print('AMOC tipping point (75 percentile):', np.percentile(tipping_estimate, 75))
+print('AMOC tipping point (90 percentile):', np.percentile(tipping_estimate, 90))
+print('AMOC tipping point (95 percentile):', np.percentile(tipping_estimate, 95))
 
 #-----------------------------------------------------------------------------------------
 time, FOV	= ReadinDataFOV(directory+'Ocean/FOV_index_section_34S.nc')
@@ -140,8 +148,12 @@ for year_start in range(year_average):
 
 print()
 print('FOV minimum (mean):', np.mean(FOV_min))
+print('FOV minimum (5 percentile):', np.percentile(FOV_min, 5))
+print('FOV minimum (10 percentile):', np.percentile(FOV_min, 10))
 print('FOV minimum (25 percentile):', np.percentile(FOV_min, 25))
 print('FOV minimum (75 percentile):', np.percentile(FOV_min, 75))
+print('FOV minimum (90 percentile):', np.percentile(FOV_min, 90))
+print('FOV minimum (95 percentile):', np.percentile(FOV_min, 95))
 
 #-----------------------------------------------------------------------------------------	
 #-----------------------------------------------------------------------------------------
@@ -155,6 +167,9 @@ for diff_i in range(len(year_diff)):
     
 print()
 print('Difference (mean):', np.mean(year_diff))
+print('Difference (5 percentile):', np.percentile(year_diff, 5))
+print('Difference (10 percentile):', np.percentile(year_diff, 10))
 print('Difference (25 percentile):', np.percentile(year_diff, 25))
 print('Difference (75 percentile):', np.percentile(year_diff, 75))
-
+print('Difference (90 percentile):', np.percentile(year_diff, 90))
+print('Difference (95 percentile):', np.percentile(year_diff, 95))

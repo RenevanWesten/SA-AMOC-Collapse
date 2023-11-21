@@ -73,8 +73,12 @@ for year_start in range(year_average):
 
 
 print('FOV minimum (mean):', np.mean(FOV_min))
+print('FOV minimum (5 percentile):', np.percentile(FOV_min, 5))
+print('FOV minimum (10 percentile):', np.percentile(FOV_min, 10))
 print('FOV minimum (25 percentile):', np.percentile(FOV_min, 25))
 print('FOV minimum (75 percentile):', np.percentile(FOV_min, 75))
+print('FOV minimum (90 percentile):', np.percentile(FOV_min, 90))
+print('FOV minimum (95 percentile):', np.percentile(FOV_min, 95))
 
 #-----------------------------------------------------------------------------------------	
 #-----------------------------------------------------------------------------------------

@@ -54,6 +54,11 @@ for time_1_i in range(1649, 1700):
 			#Make an empty array for ideal model
 			x_break	= np.zeros(time_3_j - time_1_i + 1)
 
+			if transport[time_2_k] > transport[time_1_i]:
+                #Positive trend between t2 and t1, do not consider this t2
+				transport_diff_all[time_2_k-1724] = 10**9
+				continue
+            
 			#The first part, time 1 to time 2 (break point)
 			x_break[:time_2_k-time_1_i+1]	= transport[time_1_i] + np.arange(time_2_k-time_1_i+1) * (transport[time_2_k] - transport[time_1_i]) / (time[time_2_k] - time[time_1_i])
 
@@ -78,8 +83,12 @@ for time_1_i in range(1649, 1700):
 
 
 print('AMOC tipping point (mean):', np.mean(tipping_estimate))
+print('AMOC tipping point (5 percentile):', np.percentile(tipping_estimate, 5))
+print('AMOC tipping point (10 percentile):', np.percentile(tipping_estimate, 10))
 print('AMOC tipping point (25 percentile):', np.percentile(tipping_estimate, 25))
 print('AMOC tipping point (75 percentile):', np.percentile(tipping_estimate, 75))
+print('AMOC tipping point (90 percentile):', np.percentile(tipping_estimate, 90))
+print('AMOC tipping point (95 percentile):', np.percentile(tipping_estimate, 95))
 
 #-----------------------------------------------------------------------------------------
 
