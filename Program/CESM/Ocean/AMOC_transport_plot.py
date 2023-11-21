@@ -29,57 +29,6 @@ def ReadinData(filename):
 
 	return time, transport
 
-def ConverterField(index_break, field):
-	"""Shifts field, where it starts at 0E and ends at 360E"""
-
-	new_field	= ma.masked_all(shape(field))
-	length_section	= len(field[0]) - index_break
-
-	#Shift the first part
-	new_field[:, :length_section] = field[:, index_break:]
-
-	#Shift the last part
-	new_field[:, length_section:] = field[:, :index_break] 
-
-	return new_field
-
-def LowCESMPlot(lon, lat, field):
-	"""Returns 4 array's to plot on a global projection"""
-
-	#Left of pole
-	lon[lon > 180]	= lon[lon > 180] - 360.0
-
-	lon_1		= lon[:, :160]
-	lat_1		= lat[:, :160]
-	field_1		= field[:, :160]
-
-	#Right of pole
-	lon_2		= lon[:, 159:]
-	lat_2		= lat[:, 159:]
-	field_2		= field[:, 159:]
-
-	lat_3		= ma.masked_where(lon_2 > 0.0, lat_2)
-	field_3		= ma.masked_where(lon_2 > 0.0, field_2)
-	lon_3		= ma.masked_where(lon_2 > 0.0, lon_2)
-
-	lat_2		= ma.masked_where(lon_2 < 0.0, lat_2)
-	field_2		= ma.masked_where(lon_2 < 0.0, field_2)
-	lon_2		= ma.masked_where(lon_2 < 0.0, lon_2)
-
-	#To match at 40W
-	index_1		= (fabs(lon[40] - 0.0)).argmin()
-
-	lon_4		= ConverterField(index_1, lon)
-	lat_4		= ConverterField(index_1, lat)
-	field_4		= ConverterField(index_1, field)
-
-	lon_4		= lon_4[:, 280:300]
-	lat_4		= lat_4[:, 280:300]
-	field_4		= field_4[:, 280:300]
-
-	return lon_1, lat_1, field_1, lon_2, lat_2, field_2, lon_3, lat_3, field_3, lon_4, lat_4, field_4
-
-
 #-----------------------------------------------------------------------------------------
 #--------------------------------MAIN SCRIPT STARTS HERE----------------------------------
 #-----------------------------------------------------------------------------------------	
@@ -109,7 +58,7 @@ ax.text(0.4/0.0003, 20, '0.4 Sv', verticalalignment='bottom', horizontalalignmen
 ax.text(0.5/0.0003, 20, '0.5 Sv', verticalalignment='bottom', horizontalalignment='center', color = 'c', fontsize=11)
 ax.text(0.6/0.0003, 20, '0.6 Sv', verticalalignment='bottom', horizontalalignment='center', color = 'c', fontsize=11)
 
-ax.plot(time, transport, '-k', linewidth = 0.5)
+graph_control	= plot(time, transport, '-k', linewidth = 0.5)
 
 ax.set_xlabel('Model year')
 ax.set_ylabel('Volume transport (Sv)')
@@ -120,16 +69,22 @@ ax.grid()
 ax.set_xticks([1, 500, 1000, 1500, 2000])
 ax.set_title('a) AMOC strength at 26$^{\circ}$N')
 
-ax.quiver(1750, 14, 0, -0.4, scale = 5, color = 'r', zorder = 10, width = 0.005)
-ax.text(1750, 14.05, 'AMOC tipping\n(1750)', verticalalignment='bottom', horizontalalignment='center', color = 'r', fontsize = 10)
+ax.quiver(1758, 14, 0, -0.4, scale = 5, color = 'r', zorder = 10, width = 0.005)
+ax.text(1758, 14.05, 'AMOC tipping\n(1758)', verticalalignment='bottom', horizontalalignment='center', color = 'r', fontsize = 10)
 
-ax.quiver(25.5, 12.2, 0, +0.4, scale = 5, color = 'b', zorder = 10, width = 0.004)
+ax.plot([1, 50], [12.7, 12.7], '-b')
+ax.plot([1, 1], [12.3, 13.1], '-b', zorder = 100, clip_on = False)
+ax.plot([50, 50], [12.3, 13.1], '-b')
 ax.text(30, 11.05, '1 - 50', verticalalignment='center', horizontalalignment='center', rotation = 'vertical', color = 'b', fontsize = 8)
 
-ax.quiver(1725.5, 5.5, 0, +0.4, scale = 5, color = 'b', zorder = 10, width = 0.004)
+ax.plot([1701, 1750], [6, 6], '-b')
+ax.plot([1701, 1701], [5.6, 6.4], '-b')
+ax.plot([1750, 1750], [5.6, 6.4], '-b')
 ax.text(1730, 3.2, '1701 - 1750', verticalalignment='center', horizontalalignment='center', rotation = 'vertical', color = 'b', fontsize = 8)
 
-ax.quiver(2175.5, 4.2, 0, -0.4, scale = 5, color = 'b', zorder = 10, width = 0.004)
+ax.plot([2151, 2200], [3.7, 3.7], '-b')
+ax.plot([2151, 2151], [3.3, 4.1], '-b')
+ax.plot([2200, 2200], [3.3, 4.1], '-b', zorder = 100, clip_on = False)
 ax.text(2178, 6.5, '2151 - 2200', verticalalignment='center', horizontalalignment='center', rotation = 'vertical', color = 'b', fontsize = 8)
 
 #-----------------------------------------------------------------------------------------
