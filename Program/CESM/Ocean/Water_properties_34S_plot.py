@@ -269,7 +269,7 @@ if year_start == 1 and year_end == 50:
 	ax.set_title('a) Meridional velocity (1 - 50)')
 
 if year_start == 1701 and year_end == 1750:
-	ax.set_title('b) Meridional velocity (1751 - 1750)')
+	ax.set_title('b) Meridional velocity (1701 - 1750)')
 
 if year_start == 2151 and year_end == 2200:
 	ax.set_title('c) Meridional velocity (2151 - 2200)')
