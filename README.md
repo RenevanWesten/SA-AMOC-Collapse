@@ -1,6 +1,6 @@
 # SA-AMOC-Collapse
 
-New Physics-Based Early Warning Signal shows AMOC is on Tipping Course, Science Advances (November 2023)
+New Physics-Based Early Warning Signal shows AMOC is on Tipping Course, Science Advances (December 2023)
 
 René M. van Westen, Michael Kliphuis and Henk A. Dijkstra
 
